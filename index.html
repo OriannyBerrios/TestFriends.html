@@ -6,57 +6,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test de la Amistad</title>
     <style>
+        :root {
+            --main-color: #6a0dad;
+            --secondary-color: #9370db;
+            --light-purple: #e6d5ff;
+            --background: #f9f3ff;
+            --text-dark: #4b0082;
+            --text-light: #f8f2ff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f0e6ff;
-            color: #4b0082;
-            margin: 0;
-            padding: 20px;
+            background-color: var(--background);
+            color: var(--text-dark);
             line-height: 1.6;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(75, 0, 130, 0.2);
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--main-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(106, 13, 173, 0.2);
+            margin-bottom: 30px;
         }
         
         h1 {
-            color: #6a0dad;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.2em;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
         
         h2 {
-            color: #8a2be2;
-            border-bottom: 2px solid #e6d5ff;
-            padding-bottom: 10px;
-            margin-top: 30px;
+            color: var(--main-color);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light-purple);
         }
         
-        .intro {
-            background-color: #f8f2ff;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 5px solid #9370db;
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(147, 112, 219, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .question {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #faf5ff;
-            border-radius: 10px;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(147, 112, 219, 0.25);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
             transition: all 0.3s ease;
+            margin: 10px 5px;
         }
         
-        .question:hover {
-            background-color: #f3e9ff;
-            box-shadow: 0 0 10px rgba(147, 112, 219, 0.3);
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        
+        .btn-secondary {
+            background-color: var(--light-purple);
+            color: var(--text-dark);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
         }
         
         label {
@@ -65,99 +104,105 @@
             font-weight: bold;
         }
         
-        input[type="text"], textarea {
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        select,
+        textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #d8bfd8;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            font-family: inherit;
-        }
-        
-        select {
-            padding: 8px;
-            border: 1px solid #d8bfd8;
-            border-radius: 5px;
-            background-color: white;
-            font-family: inherit;
-        }
-        
-        .options {
-            margin-left: 20px;
-        }
-        
-        .option {
-            margin-bottom: 8px;
-        }
-        
-        button {
-            background-color: #9370db;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            display: block;
-            margin: 30px auto;
-            transition: all 0.3s ease;
-        }
-        
-        button:hover {
-            background-color: #8a2be2;
-            transform: scale(1.05);
-        }
-        
-        .results {
-            display: none;
-            margin-top: 40px;
-            background-color: #f8f2ff;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        
-        .participant {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 5px;
-            border-left: 3px solid #9370db;
-        }
-        
-        .participant-name {
-            font-weight: bold;
-            color: #6a0dad;
-        }
-        
-        .score {
-            font-weight: bold;
-            color: #8a2be2;
-        }
-        
-        .name-input {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        #participantName {
-            width: 300px;
-            text-align: center;
-            font-size: 1.1em;
             padding: 12px;
-            border: 2px solid #d8bfd8;
+            border: 2px solid var(--light-purple);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
         }
         
         .hidden {
             display: none;
         }
         
-        .answers-list {
-            margin-top: 20px;
-            padding-left: 20px;
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: var(--light-purple);
+            border-radius: 10px;
+            position: relative;
         }
         
-        .answers-list li {
+        .question-number {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background-color: var(--main-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .options {
+            margin-top: 10px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .results-container {
+            margin-top: 30px;
+        }
+        
+        .participant-result {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(106, 13, 173, 0.1);
+        }
+        
+        .participant-name {
+            font-size: 1.3rem;
+            color: var(--main-color);
+            margin-bottom: 10px;
+        }
+        
+        .participant-score {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .answer-item {
             margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .answer-item::before {
+            content: "•";
+            position: absolute;
+            left: 5px;
+            color: var(--secondary-color);
         }
         
         .correct {
@@ -165,674 +210,926 @@
             font-weight: bold;
         }
         
-        .wrong {
+        .incorrect {
             color: #dc143c;
         }
         
-        .creator-results {
-            background-color: #e6e6fa;
-            padding: 20px;
+        .open-answer {
+            font-style: italic;
+            color: #555;
+        }
+        
+        .test-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .test-card {
+            background-color: white;
             border-radius: 10px;
-            margin-top: 40px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(147, 112, 219, 0.1);
+            transition: all 0.3s ease;
         }
         
-        .participant-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(147, 112, 219, 0.2);
         }
         
-        .participant-table th, .participant-table td {
-            border: 1px solid #d8bfd8;
-            padding: 8px;
-            text-align: left;
+        .test-title {
+            font-size: 1.2rem;
+            color: var(--main-color);
+            margin-bottom: 10px;
         }
         
-        .participant-table th {
-            background-color: #9370db;
+        .test-author {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-color);
             color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
         }
         
-        .participant-table tr:nth-child(even) {
-            background-color: #f8f2ff;
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--light-purple);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--main-color);
+            color: var(--main-color);
+            font-weight: bold;
+        }
+        
+        .tab:hover:not(.active) {
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .test-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <div class="container">
+            <h1>Test de la Amistad</h1>
+            <p>¿Cuánto te conocen realmente tus amigos?</p>
+        </div>
+    </header>
     <div class="container">
-        <h1>Test de la Amistad</h1>
-        
-        <div class="intro">
-            <div class="name-input">
-                <label for="participantName">¿Cuál es tu nombre?</label>
-                <input type="text" id="participantName" placeholder="Escribe tu nombre aquí">
+        <!-- Pantalla de inicio de sesión/registro -->
+        <div id="auth-screen" class="card">
+            <div class="tab-container">
+                <div class="tab active" id="login-tab">Iniciar sesión</div>
+                <div class="tab" id="register-tab">Registrarse</div>
             </div>
-            <p>¡Hola <span id="greetingName">amigo/a</span>!</p>
-            <p>He preparado este pequeño test para ver qué tan bien me conoces. Responde con lo primero que creas que es correcto sobre mí.</p>
-            <p><strong>¡No hagas trampa preguntando a otros!</strong> Es solo por diversión.</p>
-            <p>Al final, podrás ver tu puntuación y qué tan bien me conoces. ¡Mucha suerte!</p>
+            
+            <div id="login-form">
+                <h2>Inicia sesión</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-email">Correo electrónico</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Contraseña</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn">Iniciar sesión</button>
+                </form>
+            </div>
+            
+            <div id="register-form" class="hidden">
+                <h2>Regístrate</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="register-name">Nombre</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Correo electrónico</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Contraseña</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <button type="submit" class="btn">Registrarse</button>
+                </form>
+            </div>
         </div>
         
-        <form id="friendshipTest">
-            <h2>Sección 1: Gustos y Preferencias</h2>
-            
-            <div class="question">
-                <label>1. ¿Cuál es mi color favorito?</label>
-                <select id="q1">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Morado">Morado</option>
-                    <option value="Gris">Gris</option>
-                    <option value="Negro">Negro</option>
-                    <option value="Blanco">Blanco</option>
-                </select>
+        <!-- Pantalla principal después del login -->
+        <div id="main-screen" class="hidden">
+            <div class="nav">
+                <h2 id="welcome-message">Bienvenido, Usuario</h2>
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">U</div>
+                    <button id="logout-btn" class="btn btn-secondary">Cerrar sesión</button>
+                </div>
             </div>
             
-            <div class="question">
-                <label>2. ¿Qué tipo de música me gusta más?</label>
-                <select id="q2">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Rock">Rock</option>
-                    <option value="Pop-Rock">Pop-Rock</option>
-                    <option value="Pop-Latino">Pop-Latino</option>
-                    <option value="Merengue">Merengue</option>
-                </select>
+            <div class="tab-container">
+                <div class="tab active" id="my-tests-tab">Mis Tests</div>
+                <div class="tab" id="take-test-tab">Responder Test</div>
+                <div class="tab" id="create-test-tab">Crear Test</div>
             </div>
             
-            <div class="question">
-                <label>3. ¿Cuál es mi comida chatarra favorita?</label>
-                <select id="q3">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Hamburguesa">Hamburguesa</option>
-                    <option value="Shawarma">Shawarma</option>
-                    <option value="Pizza">Pizza</option>
-                    <option value="Papas sheddar">Papas sheddar</option>
-                </select>
+            <!-- Mis Tests -->
+            <div id="my-tests-content">
+                <h2>Mis Tests de Amistad</h2>
+                <button id="create-new-test-btn" class="btn">Crear nuevo test</button>
+                
+                <div class="test-list" id="test-list">
+                    <!-- Los tests se cargarán aquí dinámicamente -->
+                </div>
             </div>
             
-            <div class="question">
-                <label>4. ¿Cuál es mi bebida favorita?</label>
-                <select id="q4">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Pepsi-Cola">Pepsi-Cola</option>
-                    <option value="Coca-cola">Coca-cola</option>
-                    <option value="Malta">Malta</option>
-                    <option value="Jugo de Mora">Jugo de Mora</option>
-                </select>
+            <!-- Responder Test -->
+            <div id="take-test-content" class="hidden">
+                <h2>Responder Test de Amistad</h2>
+                <div class="form-group">
+                    <label for="test-code">Código del Test</label>
+                    <input type="text" id="test-code" placeholder="Ingresa el código del test que quieres responder">
+                    <button id="load-test-btn" class="btn">Cargar Test</button>
+                </div>
+                
+                <div id="test-to-take" class="hidden">
+                    <h3 id="test-author">Test creado por: <span id="author-name"></span></h3>
+                    
+                    <div class="form-group">
+                        <label for="participant-name">Tu nombre</label>
+                        <input type="text" id="participant-name" placeholder="Cómo quieres que te llamemos">
+                    </div>
+                    
+                    <form id="friendship-test-form">
+                        <!-- Las preguntas del test se cargarán aquí dinámicamente -->
+                    </form>
+                    
+                    <button id="submit-test-btn" class="btn">Enviar respuestas</button>
+                </div>
             </div>
             
-            <div class="question">
-                <label>5. ¿Prefiero la cerveza o el vino?</label>
-                <select id="q5">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Vino">Vino</option>
-                    <option value="Cerveza">Cerveza</option>
-                    <option value="Ambas">Ambas</option>
-                    <option value="Ninguna">Ninguna</option>
-                </select>
+             <!-- Crear Test -->
+            <div id="create-test-content" class="hidden">
+                <h2>Crear tu Test de Amistad</h2>
+                
+                <div class="form-group">
+                    <label for="test-title">Título del Test</label>
+                    <input type="text" id="test-title" placeholder="Ej: ¿Cuánto me conoces?">
+                </div>
+                
+                <h3>Preguntas del Test</h3>
+                
+                <div id="test-questions">
+                    <!-- Las preguntas se agregarán aquí dinámicamente -->
+                </div>
+                
+                <button id="add-question-btn" class="btn btn-secondary">Agregar pregunta</button>
+                <button id="save-test-btn" class="btn">Guardar Test</button>
             </div>
             
-            <div class="question">
-                <label>6. ¿Cuál es mi estación del año favorita?</label>
-                <select id="q6">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Primavera">Primavera</option>
-                    <option value="Verano">Verano</option>
-                    <option value="Otoño">Otoño</option>
-                    <option value="Invierno">Invierno</option>
-                </select>
+            <!-- Resultados del Test -->
+            <div id="test-results-content" class="hidden">
+                <h2>Resultados del Test: <span id="results-test-title"></span></h2>
+                <p>Código del test: <strong id="results-test-code"></strong></p>
+                
+                <div id="test-results-stats" class="card">
+                    <h3>Estadísticas</h3>
+                    <p>Total de participantes: <span id="total-participants">0</span></p>
+                    <p>Puntuación promedio: <span id="average-score">0</span>/<span id="total-questions">0</span></p>
+                </div>
+                
+                <div id="participants-results">
+                    <h3>Respuestas de tus amigos</h3>
+                    <!-- Los resultados se cargarán aquí dinámicamente -->
+                </div>
+                
+                <button id="back-to-tests-btn" class="btn">Volver a mis tests</button>
             </div>
-            
-            <div class="question">
-                <label>7. ¿Cuál es mi película favorita?</label>
-                <select id="q7">
-                    <option value="">Selecciona una opción</option>
-                    <option value="One day">One day</option>
-                    <option value="Violet and Flich">Violet and Flich</option>
-                    <option value="Ciudades de Papel">Ciudades de Papel</option>
-                    <option value="Orgullo y Prejuicio">Orgullo y Prejuicio</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>8. ¿Cuál es mi serie de televisión favorita?</label>
-                <select id="q8">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Bridgerton">Bridgerton</option>
-                    <option value="Dark">Dark</option>
-                    <option value="You">You</option>
-                    <option value="Thirteen Reasons Why">Thirteen Reasons Why</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>9. ¿Qué libro me ha marcado más?</label>
-                <select id="q9">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Ciudades de Papel">Ciudades de Papel</option>
-                    <option value="Buscando a Alaska">Buscando a Alaska</option>
-                    <option value="El mundo Amarillo">El mundo Amarillo</option>
-                    <option value="La reina de Espinas">La reina de Espinas</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>10. ¿Cuál es mi animal favorito?</label>
-                <select id="q10">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Perro">Perro</option>
-                    <option value="Gato">Gato</option>
-                    <option value="Lobo">Lobo</option>
-                    <option value="Mariposa">Mariposa</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>11. ¿Prefiero la playa o la montaña?</label>
-                <select id="q11">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Playa">Playa</option>
-                    <option value="Montaña">Montaña</option>
-                    <option value="Ambas">Ambas</option>
-                    <option value="Ninguna">Ninguna</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>12. ¿Cuál es mi hobby principal?</label>
-                <select id="q12">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Dormir">Dormir</option>
-                    <option value="Leer">Leer</option>
-                    <option value="Escuchar música">Escuchar música</option>
-                    <option value="Escribir">Escribir</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>13. ¿Soy más de perros o de gatos?</label>
-                <select id="q13">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Perros">Perros</option>
-                    <option value="Gatos">Gatos</option>
-                    <option value="Ambos">Ambos</option>
-                    <option value="Ninguno">Ninguno</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>14. ¿Cuál es mi deporte favorito (para ver o practicar)?</label>
-                <select id="q14">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Béisbol">Béisbol</option>
-                    <option value="Futbol">Futbol</option>
-                    <option value="Esgrima">Esgrima</option>
-                    <option value="Ninguno">Ninguno</option>
-                </select>
-            </div>
-            
-            <h2>Sección 2: Personalidad y Hábitos</h2>
-            
-            <div class="question">
-                <label>15. ¿Soy más...?</label>
-                <select id="q15">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Introvertido/a">Introvertido/a</option>
-                    <option value="Extrovertido/a">Extrovertido/a</option>
-                    <option value="Un poco de ambos">Un poco de ambos</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>16. ¿Cuál es mi mayor miedo?</label>
-                <select id="q16">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Las alturas">Las alturas</option>
-                    <option value="La oscuridad">La oscuridad</option>
-                    <option value="Perder algo">Perder algo</option>
-                    <option value="Presentar un parcial">Presentar un parcial</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>17. ¿Cuál es mi mayor sueño o aspiración?</label>
-                <input type="text" id="q17" placeholder="Escribe tu respuesta aquí">
-            </div>
-            
-            <div class="question">
-                <label>18. ¿Cómo reacciono normalmente ante el estrés?</label>
-                <select id="q18">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Llora">Llora</option>
-                    <option value="Se abruma">Se abruma</option>
-                    <option value="Deja de comer">Deja de comer</option>
-                    <option value="Grita">Grita</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>19. ¿Soy madrugador/a o noctámbulo/a?</label>
-                <select id="q19">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Madrugador/a">Madrugador/a</option>
-                    <option value="Noctámbulo/a">Noctámbulo/a</option>
-                    <option value="Depende del día">Depende del día</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>20. ¿Qué me saca de quicio rápidamente?</label>
-                <select id="q20">
-                    <option value="">Selecciona una opción</option>
-                    <option value="El desorden">El desorden</option>
-                    <option value="No entender el porque de las cosas">No entender el porque de las cosas</option>
-                    <option value="Las mentiras">Las mentiras</option>
-                    <option value="Que no me presten atención cuando estoy hablando">Que no me presten atención cuando estoy hablando</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>21. ¿Cuál es una de mis manías?</label>
-                <select id="q21">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Hablar sola y en voz alta">Hablar sola y en voz alta</option>
-                    <option value="Alinear Objetos">Alinear Objetos</option>
-                    <option value="Morderme las uñas o los labios cuando estoy concentrada">Morderme las uñas o los labios cuando estoy concentrada</option>
-                    <option value="Mantener todo en orden">Mantener todo en orden</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>22. ¿Cómo me gusta celebrar mi cumpleaños?</label>
-                <select id="q22">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Sola">Sola</option>
-                    <option value="Paseando">Paseando</option>
-                    <option value="Compartiendo con amigos">Compartiendo con amigos</option>
-                    <option value="Salir a comer">Salir a comer</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>23. ¿Qué valoro más en una amistad?</label>
-                <select id="q23">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Lealtad">Lealtad</option>
-                    <option value="Confianza">Confianza</option>
-                    <option value="Tiempo de calidad">Tiempo de calidad</option>
-                    <option value="Sinceridad">Sinceridad</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>24. ¿Cuál es mi lenguaje del amor principal?</label>
-                <select id="q24">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Palabras de afirmación">Palabras de afirmación</option>
-                    <option value="Tiempo de calidad">Tiempo de calidad</option>
-                    <option value="Regalos">Regalos</option>
-                    <option value="Actos de servicio">Actos de servicio</option>
-                    <option value="Contacto físico">Contacto físico</option>
-                </select>
-            </div>
-            
-            <h2>Sección 3: Recuerdos y Experiencias Compartidas</h2>
-            
-            <div class="question">
-                <label>25. ¿Dónde nos conocimos?</label>
-                <input type="text" id="q25" placeholder="Escribe tu respuesta aquí">
-            </div>
-            
-            <div class="question">
-                <label>26. ¿Cuál es el recuerdo más divertido que tenemos juntos?</label>
-                <textarea id="q26" rows="3" placeholder="Escribe tu respuesta aquí"></textarea>
-            </div>
-            
-            <div class="question">
-                <label>27. ¿Cuál es el viaje más memorable que hemos hecho juntos (si aplica)?</label>
-                <textarea id="q27" rows="3" placeholder="Escribe tu respuesta aquí"></textarea>
-            </div>
-            
-            <div class="question">
-                <label>28. ¿Cuál es una de las cosas más locas que hemos hecho juntos?</label>
-                <textarea id="q28" rows="3" placeholder="Escribe tu respuesta aquí"></textarea>
-            </div>
-            
-            <div class="question">
-                <label>29. ¿Qué es lo que más me gusta de nuestra amistad?</label>
-                <textarea id="q29" rows="3" placeholder="Escribe tu respuesta aquí"></textarea>
-            </div>
-            
-            <div class="question">
-                <label>30. ¿Cuál fue nuestra primera impresión el uno del otro?</label>
-                <textarea id="q30" rows="3" placeholder="Escribe tu respuesta aquí"></textarea>
-            </div>
-            
-            <h2>Sección 4: Preguntas Aleatorias</h2>
-            
-            <div class="question">
-                <label>31. Si tuviera un superpoder, ¿cuál elegiría?</label>
-                <select id="q31">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Teletransportarme">Teletransportarme</option>
-                    <option value="Leer mentes">Leer mentes</option>
-                    <option value="Ser invisible">Ser invisible</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>32. ¿Qué objeto no puede faltar en mi bolso/mochila?</label>
-                <select id="q32">
-                    <option value="">Selecciona una opción</option>
-                    <option value="llavero">llavero</option>
-                    <option value="la tarjeta">la tarjeta</option>
-                    <option value="gloss">gloss</option>
-                    <option value="lapiz">lapiz</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>33. ¿Prefiero escribir o llamar?</label>
-                <select id="q33">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Escribir (mensajes)">Escribir (mensajes)</option>
-                    <option value="Llamar">Llamar</option>
-                    <option value="Depende">Depende</option>
-                </select>
-            </div>
-            
-            <div class="question">
-                <label>34. ¿Cuál es mi talento oculto?</label>
-                <input type="text" id="q34" placeholder="Escribe tu respuesta aquí">
-            </div>
-            
-            <div class="question">
-                <label>35. ¿Cuándo es mi cumpleaños?</label>
-                <select id="q35">
-                    <option value="">Selecciona una opción</option>
-                    <option value="12 de septiembre">12 de septiembre</option>
-                    <option value="14 de noviembre">14 de noviembre</option>
-                    <option value="14 de septiembre">14 de septiembre</option>
-                    <option value="18 de noviembre">18 de noviembre</option>
-                </select>
-            </div>
-            
-            <button type="button" id="submitTest">¡Ver mis resultados!</button>
-        </form>
-        
-        <div id="participantResults" class="results hidden">
-            <h2>¡Resultados para <span id="resultName"></span>!</h2>
-            <p>Tu puntuación: <span id="score" class="score"></span> de 35 puntos</p>
-            <p id="resultMessage"></p>
-            
-            <h3>Tus respuestas:</h3>
-            <ul id="answersList" class="answers-list"></ul>
-        </div>
-        
-        <div id="creatorResults" class="creator-results hidden">
-            <h2>Resultados para el creador del test</h2>
-            <p>Aquí puedes ver todas las respuestas de tus amigos:</p>
-            
-            <div id="allParticipants"></div>
-            
-            <h3>Respuestas correctas:</h3>
-            <ul>
-                <li>1. Color favorito: <span class="correct">Negro</span></li>
-                <li>2. Tipo de música: <span class="correct">Pop-Rock</span></li>
-                <li>3. Comida chatarra favorita: <span class="correct">Pizza</span></li>
-                <li>4. Bebida favorita: <span class="correct">Coca-cola</span></li>
-                <li>5. Cerveza o vino: <span class="correct">Ambas</span></li>
-                <li>6. Estación favorita: <span class="correct">Otoño</span></li>
-                <li>7. Película favorita: <span class="correct">Violet and Flich</span></li>
-                <li>8. Serie favorita: <span class="correct">You</span></li>
-                <li>9. Libro que me marcó: <span class="correct">Buscando a Alaska</span></li>
-                <li>10. Animal favorito: <span class="correct">Gato</span></li>
-                <li>11. Playa o montaña: <span class="correct">Ambas</span></li>
-                <li>12. Hobby principal: <span class="correct">Escribir</span></li>
-                <li>13. Perros o gatos: <span class="correct">Gatos</span></li>
-                <li>14. Deporte favorito: <span class="correct">Ninguno</span></li>
-                <li>15. Personalidad: <span class="correct">Introvertido/a</span></li>
-                <li>16. Mayor miedo: <span class="correct">La oscuridad</span></li>
-                <li>17. Mayor sueño: <span class="correct">Conocer muchos lugares</span></li>
-                <li>18. Reacción al estrés: <span class="correct">Se abruma</span></li>
-                <li>19. Madrugador o noctámbulo: <span class="correct">Depende del día</span></li>
-                <li>20. Lo que me saca de quicio: <span class="correct">Las mentiras</span></li>
-                <li>21. Manía: <span class="correct">Morderme las uñas o los labios cuando estoy concentrada</span></li>
-                <li>22. Celebrar cumpleaños: <span class="correct">Paseando</span></li>
-                <li>23. Valor en amistad: <span class="correct">Sinceridad</span></li>
-                <li>24. Lenguaje del amor: <span class="correct">Actos de servicio</span></li>
-                <li>31. Superpoder: <span class="correct">Teletransportarme</span></li>
-                <li>32. Objeto en bolso: <span class="correct">la tarjeta</span></li>
-                <li>33. Escribir o llamar: <span class="correct">Depende</span></li>
-                <li>35. Cumpleaños: <span class="correct">14 de septiembre</span></li>
-            </ul>
         </div>
     </div>
 
     <script>
-        // Respuestas correctas
-        const correctAnswers = {
-            q1: "Negro",
-            q2: "Pop-Rock",
-            q3: "Pizza",
-            q4: "Coca-cola",
-            q5: "Ambas",
-            q6: "Otoño",
-            q7: "Violet and Flich",
-            q8: "You",
-            q9: "Buscando a Alaska",
-            q10: "Gato",
-            q11: "Ambas",
-            q12: "Escribir",
-            q13: "Gatos",
-            q14: "Ninguno",
-            q15: "Introvertido/a",
-            q16: "La oscuridad",
-            q17: "Conocer muchos lugares",
-            q18: "Se abruma",
-            q19: "Depende del día",
-            q20: "Las mentiras",
-            q21: "Morderme las uñas o los labios cuando estoy concentrada",
-            q22: "Paseando",
-            q23: "Sinceridad",
-            q24: "Actos de servicio",
-            q31: "Teletransportarme",
-            q32: "la tarjeta",
-            q33: "Depende",
-            q35: "14 de septiembre"
-        };
+        // Datos de la aplicación
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('friendshipTestUsers')) || [];
+        let tests = JSON.parse(localStorage.getItem('friendshipTests')) || [];
+        let currentTest = null;
+        let currentTestResponses = [];
         
-             // Almacenar participantes
-        let participants = JSON.parse(localStorage.getItem('friendshipTestParticipants')) || [];
+        // Elementos del DOM
+        const authScreen = document.getElementById('auth-screen');
+        const mainScreen = document.getElementById('main-screen');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginFormDiv = document.getElementById('login-form');
+        const registerFormDiv = document.getElementById('register-form');
+        const welcomeMessage = document.getElementById('welcome-message');
+        const userAvatar = document.getElementById('user-avatar');
+        const logoutBtn = document.getElementById('logout-btn');
         
-        // Actualizar nombre en el saludo
-        document.getElementById('participantName').addEventListener('input', function() {
-            const name = this.value.trim() || 'amigo/a';
-            document.getElementById('greetingName').textContent = name;
-        });
+        // Tabs
+        const myTestsTab = document.getElementById('my-tests-tab');
+        const takeTestTab = document.getElementById('take-test-tab');
+        const createTestTab = document.getElementById('create-test-tab');
+        const myTestsContent = document.getElementById('my-tests-content');
+        const takeTestContent = document.getElementById('take-test-content');
+        const createTestContent = document.getElementById('create-test-content');
+        const testResultsContent = document.getElementById('test-results-content');
         
-        // Enviar test
-        document.getElementById('submitTest').addEventListener('click', function() {
-            const participantName = document.getElementById('participantName').value.trim();
+        // Funciones de autenticación
+        function login(email, password) {
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                authScreen.classList.add('hidden');
+                mainScreen.classList.remove('hidden');
+                updateUI();
+                loadUserTests();
+                return true;
+            }
+            return false;
+        }
+        
+        function register(name, email, password) {
+            if (users.some(u => u.email === email)) {
+                return false;
+            }
             
-            if (!participantName) {
-                alert('Por favor, escribe tu nombre para continuar.');
+            const newUser = {
+                id: Date.now().toString(),
+                name,
+                email,
+                password,
+                avatarColor: getRandomColor()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('friendshipTestUsers', JSON.stringify(users));
+            
+            // Iniciar sesión automáticamente después del registro
+            login(email, password);
+            return true;
+        }
+        
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            mainScreen.classList.add('hidden');
+            authScreen.classList.remove('hidden');
+        }
+        
+        function getRandomColor() {
+            const colors = ['#6a0dad', '#9370db', '#8a2be2', '#9932cc', '#ba55d3'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        // Funciones de UI
+        function updateUI() {
+            if (currentUser) {
+                welcomeMessage.textContent = `Bienvenido, ${currentUser.name}`;
+                userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+                userAvatar.style.backgroundColor = currentUser.avatarColor;
+            }
+        }
+        
+        function showTab(tabName) {
+            // Ocultar todos los contenidos
+            myTestsContent.classList.add('hidden');
+            takeTestContent.classList.add('hidden');
+            createTestContent.classList.add('hidden');
+            testResultsContent.classList.add('hidden');
+            
+            // Desactivar todas las pestañas
+            myTestsTab.classList.remove('active');
+            takeTestTab.classList.remove('active');
+            createTestTab.classList.remove('active');
+            
+            // Mostrar el contenido seleccionado
+            if (tabName === 'my-tests') {
+                myTestsContent.classList.remove('hidden');
+                myTestsTab.classList.add('active');
+                loadUserTests();
+            } else if (tabName === 'take-test') {
+                takeTestContent.classList.remove('hidden');
+                takeTestTab.classList.add('active');
+            } else if (tabName === 'create-test') {
+                createTestContent.classList.remove('hidden');
+                createTestTab.classList.add('active');
+                resetTestCreation();
+            }
+        }
+        
+        function showTestResults(testId) {
+            myTestsContent.classList.add('hidden');
+            takeTestContent.classList.add('hidden');
+            createTestContent.classList.add('hidden');
+            testResultsContent.classList.remove('hidden');
+            
+            loadTestResults(testId);
+        }
+        
+        // Funciones de tests
+        function createTest(title, questions) {
+            const testCode = generateTestCode();
+            
+            const newTest = {
+                id: Date.now().toString(),
+                title,
+                code: testCode,
+                authorId: currentUser.id,
+                authorName: currentUser.name,
+                questions,
+                responses: [],
+                createdAt: new Date().toISOString()
+            };
+            
+            tests.push(newTest);
+            localStorage.setItem('friendshipTests', JSON.stringify(tests));
+            
+            return newTest;
+        }
+        
+        function generateTestCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        function loadUserTests() {
+            const testList = document.getElementById('test-list');
+            testList.innerHTML = '';
+            
+            const userTests = tests.filter(test => test.authorId === currentUser.id);
+            
+            if (userTests.length === 0) {
+                testList.innerHTML = '<p>No has creado ningún test aún. ¡Crea uno para empezar!</p>';
                 return;
             }
             
-            // Verificar si ya existe un participante con ese nombre
-            const existingIndex = participants.findIndex(p => p.name.toLowerCase() === participantName.toLowerCase());
+            userTests.forEach(test => {
+                const testCard = document.createElement('div');
+                testCard.className = 'test-card';
+                testCard.innerHTML = `
+                    <h3 class="test-title">${test.title}</h3>
+                    <p class="test-author">Código: ${test.code}</p>
+                    <p>${test.questions.length} preguntas</p>
+                    <p>${test.responses.length} respuestas</p>
+                    <button class="btn view-results-btn" data-testid="${test.id}">Ver resultados</button>
+                `;
+                testList.appendChild(testCard);
+            });
             
-            // Recoger respuestas
-            const answers = {};
-            let score = 0;
-            
-            for (let i = 1; i <= 35; i++) {
-                const questionId = 'q' + i;
-                let answer;
-                
-                if (i <= 24 || (i >= 31 && i <= 33) || i === 35) {
-                    // Preguntas de selección
-                    const selectElement = document.getElementById(questionId);
-                    answer = selectElement.value;
-                    
-                    // Verificar respuesta correcta para preguntas con opciones fijas
-                    if (correctAnswers[questionId] && answer === correctAnswers[questionId]) {
-                        score++;
-                    }
-                } else if (i === 34) {
-                    // Pregunta de texto libre
-                    answer = document.getElementById(questionId).value;
-                } else {
-                    // Preguntas abiertas (sección 3)
-                    const element = document.getElementById(questionId);
-                    answer = element.tagName === 'TEXTAREA' ? element.value : element.value;
-                }
-                
-                answers[questionId] = answer;
+            // Agregar event listeners a los botones
+            document.querySelectorAll('.view-results-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    showTestResults(this.getAttribute('data-testid'));
+                });
+            });
+        }
+        
+        function loadTestToTake(testCode) {
+            const test = tests.find(t => t.code === testCode);
+            if (!test) {
+                alert('No se encontró un test con ese código');
+                return;
             }
             
-            // Crear objeto participante
-            const participant = {
-                name: participantName,
-                score: score,
-                answers: answers,
-                date: new Date().toLocaleString()
+            currentTest = test;
+            
+            const testForm = document.getElementById('friendship-test-form');
+            testForm.innerHTML = '';
+            
+            document.getElementById('author-name').textContent = test.authorName;
+            
+            test.questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                const questionNumber = document.createElement('div');
+                questionNumber.className = 'question-number';
+                questionNumber.textContent = index + 1;
+                
+                const questionLabel = document.createElement('label');
+                questionLabel.textContent = question.question;
+                
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                
+                if (question.type === 'multiple-choice') {
+                    question.options.forEach((option, i) => {
+                        const optionDiv = document.createElement('div');
+                        optionDiv.className = 'option';
+                        
+                        const input = document.createElement('input');
+                        input.type = 'radio';
+                        input.name = `q${index}`;
+                        input.id = `q${index}-o${i}`;
+                        input.value = option;
+                        
+                        const label = document.createElement('label');
+                        label.htmlFor = `q${index}-o${i}`;
+                        label.textContent = option;
+                        
+                        optionDiv.appendChild(input);
+                        optionDiv.appendChild(label);
+                        optionsDiv.appendChild(optionDiv);
+                    });
+                } else if (question.type === 'open-ended') {
+                    const textarea = document.createElement('textarea');
+                    textarea.name = `q${index}`;
+                    textarea.rows = 3;
+                    textarea.placeholder = 'Escribe tu respuesta aquí';
+                    optionsDiv.appendChild(textarea);
+                }
+                
+                questionDiv.appendChild(questionNumber);
+                questionDiv.appendChild(questionLabel);
+                questionDiv.appendChild(optionsDiv);
+                testForm.appendChild(questionDiv);
+            });
+            
+            document.getElementById('test-to-take').classList.remove('hidden');
+        }
+        
+        function submitTestResponse(testId, participantName, answers) {
+            const test = tests.find(t => t.id === testId);
+            if (!test) return;
+            
+            // Calcular puntuación
+            let score = 0;
+            const detailedAnswers = [];
+            
+            test.questions.forEach((question, index) => {
+                const answer = answers[index];
+                let isCorrect = false;
+                
+                if (question.type === 'multiple-choice') {
+                    isCorrect = answer === question.correctAnswer;
+                    if (isCorrect) score++;
+                }
+                
+                detailedAnswers.push({
+                    question: question.question,
+                    answer: answer,
+                    correctAnswer: question.correctAnswer,
+                    isCorrect: isCorrect
+                });
+            });
+            
+            const response = {
+                participantName,
+                score,
+                totalQuestions: test.questions.length,
+                answers: detailedAnswers,
+                date: new Date().toISOString()
             };
             
-            // Actualizar o agregar participante
-            if (existingIndex >= 0) {
-                participants[existingIndex] = participant;
-            } else {
-                participants.push(participant);
-            }
+            test.responses.push(response);
+            localStorage.setItem('friendshipTests', JSON.stringify(tests));
             
-            // Guardar en localStorage
-            localStorage.setItem('friendshipTestParticipants', JSON.stringify(participants));
-            
-            // Mostrar resultados
-            showResults(participant);
-            
-            // Mostrar resultados para el creador si es necesario
-            showCreatorResults();
-        });
+            // Mostrar resultados al participante
+            showTestResultsForParticipant(test, response);
+        }
         
-        // Mostrar resultados del participante
-        function showResults(participant) {
-            document.getElementById('resultName').textContent = participant.name;
-            document.getElementById('score').textContent = participant.score;
+        function showTestResultsForParticipant(test, response) {
+            takeTestContent.classList.add('hidden');
+            testResultsContent.classList.remove('hidden');
             
-            // Mensaje según puntuación
-            let message = '';
-            const percentage = (participant.score / 35) * 100;
+            document.getElementById('results-test-title').textContent = test.title;
+            document.getElementById('results-test-code').textContent = test.code;
             
-            if (percentage >= 90) {
-                message = '¡Wow! ¡Eres mi alma gemela! ¡Me conoces increíblemente bien!';
-            } else if (percentage >= 70) {
-                message = '¡Muy bien! Me conoces bastante bien.';
-            } else if (percentage >= 50) {
-                message = 'No está mal, pero hay cosas que aún no sabes sobre mí.';
-            } else if (percentage >= 30) {
-                message = 'Hmm... parece que necesitamos pasar más tiempo juntos.';
-            } else {
-                message = '¿Seguro que somos amigos? ¡No me conoces casi nada!';
-            }
+            const resultsDiv = document.createElement('div');
+            resultsDiv.className = 'participant-result';
             
-            document.getElementById('resultMessage').textContent = message;
+            resultsDiv.innerHTML = `
+                <h3 class="participant-name">Resultados para: ${response.participantName}</h3>
+                <p class="participant-score">Puntuación: ${response.score}/${response.totalQuestions}</p>
+                <div id="participant-answers"></div>
+            `;
             
-            // Mostrar respuestas
-            const answersList = document.getElementById('answersList');
-            answersList.innerHTML = '';
+            document.getElementById('participants-results').innerHTML = '';
+            document.getElementById('participants-results').appendChild(resultsDiv);
             
-            for (let i = 1; i <= 35; i++) {
-                const questionId = 'q' + i;
-                const answer = participant.answers[questionId] || '(Sin respuesta)';
+            const answersDiv = document.getElementById('participant-answers');
+            
+            response.answers.forEach((answer, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-item';
                 
-                const li = document.createElement('li');
-                
-                // Verificar si es pregunta con respuesta correcta definida
-                if (correctAnswers[questionId]) {
-                    const isCorrect = answer === correctAnswers[questionId];
-                    li.innerHTML = `<strong>Pregunta ${i}:</strong> ${answer} `;
-                    
-                    if (isCorrect) {
-                        li.innerHTML += '<span class="correct">✓ Correcto</span>';
-                    } else {
-                        li.innerHTML += `<span class="wrong">✗ Incorrecto (Correcto: ${correctAnswers[questionId]})</span>`;
-                    }
+                let answerContent = '';
+                if (answer.correctAnswer) {
+                    // Pregunta con respuesta correcta definida
+                    answerContent = `
+                        <strong>Pregunta ${index + 1}:</strong> ${answer.question}<br>
+                        <span class="${answer.isCorrect ? 'correct' : 'incorrect'}">
+                            Tu respuesta: ${answer.answer} 
+                            ${answer.isCorrect ? '✓ Correcto' : `✗ Incorrecto (Correcto: ${answer.correctAnswer})`}
+                        </span>
+                    `;
                 } else {
-                    // Preguntas abiertas
-                    li.innerHTML = `<strong>Pregunta ${i}:</strong> ${answer}`;
+                    // Pregunta abierta
+                    answerContent = `
+                        <strong>Pregunta ${index + 1}:</strong> ${answer.question}<br>
+                        <span class="open-answer">Tu respuesta: ${answer.answer}</span>
+                    `;
                 }
                 
-                answersList.appendChild(li);
-            }
-            
-            // Mostrar sección de resultados
-            document.getElementById('participantResults').classList.remove('hidden');
-            document.getElementById('friendshipTest').classList.add('hidden');
-            
-            // Desplazarse a los resultados
-            document.getElementById('participantResults').scrollIntoView({ behavior: 'smooth' });
+                answerDiv.innerHTML = answerContent;
+                answersDiv.appendChild(answerDiv);
+            });
         }
         
-        // Mostrar resultados para el creador del test
-        function showCreatorResults() {
-            const creatorResults = document.getElementById('creatorResults');
+        function loadTestResults(testId) {
+            const test = tests.find(t => t.id === testId);
+            if (!test) return;
             
-            // Mostrar solo si hay participantes
-            if (participants.length > 0) {
-                creatorResults.classList.remove('hidden');
+            document.getElementById('results-test-title').textContent = test.title;
+            document.getElementById('results-test-code').textContent = test.code;
+            document.getElementById('total-participants').textContent = test.responses.length;
+            document.getElementById('total-questions').textContent = test.questions.length;
+            
+            // Calcular puntuación promedio
+            const avgScore = test.responses.length > 0 
+                ? (test.responses.reduce((sum, res) => sum + res.score, 0) / test.responses.length).toFixed(1)
+                : 0;
+            document.getElementById('average-score').textContent = avgScore;
+            
+            const participantsResults = document.getElementById('participants-results');
+            participantsResults.innerHTML = '';
+            
+            if (test.responses.length === 0) {
+                participantsResults.innerHTML = '<p>No hay respuestas aún para este test.</p>';
+                return;
+            }
+            
+            test.responses.forEach(response => {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'participant-result';
                 
-                // Mostrar lista de participantes
-                const participantsDiv = document.getElementById('allParticipants');
-                participantsDiv.innerHTML = '<h3>Participantes:</h3>';
-                
-                // Crear tabla
-                const table = document.createElement('table');
-                table.className = 'participant-table';
-                
-                // Encabezados
-                const thead = document.createElement('thead');
-                thead.innerHTML = `
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Puntuación</th>
-                        <th>Fecha</th>
-                    </tr>
+                resultDiv.innerHTML = `
+                    <h3 class="participant-name">${response.participantName}</h3>
+                    <p class="participant-score">Puntuación: ${response.score}/${response.totalQuestions}</p>
+                    <button class="btn btn-secondary view-details-btn">Ver detalles</button>
+                    <div class="answer-details hidden"></div>
                 `;
-                table.appendChild(thead);
                 
-                // Cuerpo
-                const tbody = document.createElement('tbody');
+                const detailsDiv = resultDiv.querySelector('.answer-details');
                 
-                // Ordenar por puntuación (de mayor a menor)
-                participants.sort((a, b) => b.score - a.score);
-                
-                participants.forEach(participant => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${participant.name}</td>
-                        <td>${participant.score}/35</td>
-                        <td>${participant.date}</td>
-                    `;
-                    tbody.appendChild(row);
+                response.answers.forEach((answer, index) => {
+                    const answerItem = document.createElement('div');
+                    answerItem.className = 'answer-item';
+                    
+                    let answerContent = '';
+                    if (answer.correctAnswer) {
+                        // Pregunta con respuesta correcta definida
+                        answerContent = `
+                            <strong>Pregunta ${index + 1}:</strong> ${answer.question}<br>
+                            <span class="${answer.isCorrect ? 'correct' : 'incorrect'}">
+                                Respuesta: ${answer.answer} 
+                                ${answer.isCorrect ? '✓ Correcto' : `✗ Incorrecto (Correcto: ${answer.correctAnswer})`}
+                            </span>
+                        `;
+                    } else {
+                        // Pregunta abierta
+                        answerContent = `
+                            <strong>Pregunta ${index + 1}:</strong> ${answer.question}<br>
+                            <span class="open-answer">Respuesta: ${answer.answer}</span>
+                        `;
+                    }
+                    
+                    answerItem.innerHTML = answerContent;
+                    detailsDiv.appendChild(answerItem);
                 });
                 
-                table.appendChild(tbody);
-                participantsDiv.appendChild(table);
-            } else {
-                creatorResults.classList.add('hidden');
-            }
+                participantsResults.appendChild(resultDiv);
+                
+                // Agregar evento para mostrar/ocultar detalles
+                resultDiv.querySelector('.view-details-btn').addEventListener('click', function() {
+                    detailsDiv.classList.toggle('hidden');
+                    this.textContent = detailsDiv.classList.contains('hidden') ? 'Ver detalles' : 'Ocultar detalles';
+                });
+            });
         }
-              // Mostrar resultados del creador al cargar la página si es necesario
-        document.addEventListener('DOMContentLoaded', function() {
-            showCreatorResults();
+        
+        function resetTestCreation() {
+            document.getElementById('test-title').value = '';
+            document.getElementById('test-questions').innerHTML = '';
+        }
+        
+        function addQuestionToTest() {
+            const questionsDiv = document.getElementById('test-questions');
+            const questionCount = questionsDiv.children.length;
             
-            // Si hay un parámetro 'creator' en la URL, mostrar siempre los resultados del creador
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('creator')) {
-                document.getElementById('creatorResults').classList.remove('hidden');
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `
+                <div class="question-number">${questionCount + 1}</div>
+                <div class="form-group">
+                    <label>Texto de la pregunta</label>
+                    <input type="text" class="question-text" placeholder="Escribe la pregunta">
+                </div>
+                <div class="form-group">
+                    <label>Tipo de pregunta</label>
+                    <select class="question-type">
+                        <option value="multiple-choice">Selección múltiple</option>
+                        <option value="open-ended">Respuesta abierta</option>
+                    </select>
+                </div>
+                <div class="multiple-choice-options ${questionCount > 0 ? 'hidden' : ''}">
+                    <div class="form-group">
+                        <label>Opciones (marca la correcta)</label>
+                        <div class="options-container">
+                            <div class="option-input">
+                                <input type="radio" name="correct-answer-${questionCount}" value="0" checked>
+                                <input type="text" class="option-text" placeholder="Opción 1">
+                            </div>
+                            <div class="option-input">
+                                <input type="radio" name="correct-answer-${questionCount}" value="1">
+                                <input type="text" class="option-text" placeholder="Opción 2">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary add-option-btn">Agregar opción</button>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary remove-question-btn">Eliminar pregunta</button>
+            `;
+     
+     questionsDiv.appendChild(questionDiv);
+            
+            // Event listener para cambiar tipo de pregunta
+            questionDiv.querySelector('.question-type').addEventListener('change', function() {
+                const optionsDiv = questionDiv.querySelector('.multiple-choice-options');
+                if (this.value === 'multiple-choice') {
+                    optionsDiv.classList.remove('hidden');
+                } else {
+                    optionsDiv.classList.add('hidden');
+                }
+            });
+            
+            // Event listener para agregar opción
+            questionDiv.querySelector('.add-option-btn').addEventListener('click', function() {
+                const optionsContainer = questionDiv.querySelector('.options-container');
+                const optionCount = optionsContainer.children.length;
+                
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option-input';
+                optionDiv.innerHTML = `
+                    <input type="radio" name="correct-answer-${questionCount}" value="${optionCount}">
+                    <input type="text" class="option-text" placeholder="Opción ${optionCount + 1}">
+                    <button type="button" class="btn btn-secondary remove-option-btn">X</button>
+                `;
+                
+                optionsContainer.appendChild(optionDiv);
+                
+                // Event listener para eliminar opción
+                optionDiv.querySelector('.remove-option-btn').addEventListener('click', function() {
+                    optionsContainer.removeChild(optionDiv);
+                    
+                    // Reindexar las opciones restantes
+                    const remainingOptions = optionsContainer.querySelectorAll('.option-input');
+                    remainingOptions.forEach((opt, idx) => {
+                        opt.querySelector('input[type="radio"]').value = idx;
+                        opt.querySelector('.option-text').placeholder = `Opción ${idx + 1}`;
+                    });
+                });
+            });
+            
+            // Event listener para eliminar pregunta
+            questionDiv.querySelector('.remove-question-btn').addEventListener('click', function() {
+                questionsDiv.removeChild(questionDiv);
+                
+                // Renumerar las preguntas restantes
+                const remainingQuestions = questionsDiv.querySelectorAll('.question');
+                remainingQuestions.forEach((q, idx) => {
+                    q.querySelector('.question-number').textContent = idx + 1;
+                });
+            });
+        }
+        
+        function saveTest() {
+            const title = document.getElementById('test-title').value.trim();
+            if (!title) {
+                alert('Por favor ingresa un título para el test');
+                return;
             }
+            
+            const questionDivs = document.getElementById('test-questions').children;
+            if (questionDivs.length === 0) {
+                alert('Debes agregar al menos una pregunta');
+                return;
+            }
+            
+            const questions = [];
+            
+            for (let i = 0; i < questionDivs.length; i++) {
+                const questionDiv = questionDivs[i];
+                const questionText = questionDiv.querySelector('.question-text').value.trim();
+                const questionType = questionDiv.querySelector('.question-type').value;
+                
+                if (!questionText) {
+                    alert(`Por favor ingresa el texto para la pregunta ${i + 1}`);
+                    return;
+                }
+                
+                if (questionType === 'multiple-choice') {
+                    const optionInputs = questionDiv.querySelectorAll('.option-text');
+                    const options = [];
+                    let correctAnswer = '';
+                    
+                    for (let j = 0; j < optionInputs.length; j++) {
+                        const optionText = optionInputs[j].value.trim();
+                        if (!optionText) {
+                            alert(`Por favor ingresa el texto para la opción ${j + 1} de la pregunta ${i + 1}`);
+                            return;
+                        }
+                        
+                        options.push(optionText);
+                        
+                        // Verificar si esta opción es la correcta
+                        const radioBtn = optionInputs[j].previousElementSibling;
+                        if (radioBtn.checked) {
+                            correctAnswer = optionText;
+                        }
+                    }
+                    
+                    if (options.length < 2) {
+                        alert(`Debes agregar al menos 2 opciones para la pregunta ${i + 1}`);
+                        return;
+                    }
+                    
+                    if (!correctAnswer) {
+                        alert(`Debes seleccionar una opción correcta para la pregunta ${i + 1}`);
+                        return;
+                    }
+                    
+                    questions.push({
+                        question: questionText,
+                        type: 'multiple-choice',
+                        options: options,
+                        correctAnswer: correctAnswer
+                    });
+                } else {
+                    questions.push({
+                        question: questionText,
+                        type: 'open-ended'
+                    });
+                }
+            }
+            
+            const test = createTest(title, questions);
+            alert(`Test creado exitosamente! Código para compartir: ${test.code}`);
+            showTab('my-tests');
+        }
+        
+        // Event Listeners
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (login(email, password)) {
+                alert('Inicio de sesión exitoso');
+            } else {
+                alert('Correo electrónico o contraseña incorrectos');
+            }
+        });
+        
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            
+            if (register(name, email, password)) {
+                alert('Registro exitoso. ¡Bienvenido!');
+            } else {
+                alert('Ya existe un usuario con ese correo electrónico');
+            }
+        });
+        
+        loginTab.addEventListener('click', function() {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginFormDiv.classList.remove('hidden');
+            registerFormDiv.classList.add('hidden');
+        });       
+         registerTab.addEventListener('click', function() {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerFormDiv.classList.remove('hidden');
+            loginFormDiv.classList.add('hidden');
+        });
+        
+        logoutBtn.addEventListener('click', logout);
+        
+        myTestsTab.addEventListener('click', () => showTab('my-tests'));
+        takeTestTab.addEventListener('click', () => showTab('take-test'));
+        createTestTab.addEventListener('click', () => showTab('create-test'));
+        
+        document.getElementById('create-new-test-btn').addEventListener('click', () => showTab('create-test'));
+        document.getElementById('back-to-tests-btn').addEventListener('click', () => showTab('my-tests'));
+        
+        document.getElementById('load-test-btn').addEventListener('click', function() {
+            const testCode = document.getElementById('test-code').value.trim();
+            if (testCode) {
+                loadTestToTake(testCode);
+            } else {
+                alert('Por favor ingresa un código de test');
+            }
+        });
+        
+        document.getElementById('submit-test-btn').addEventListener('click', function() {
+            const participantName = document.getElementById('participant-name').value.trim();
+            if (!participantName) {
+                alert('Por favor ingresa tu nombre');
+                return;
+            }
+            
+            const answers = [];
+            const form = document.getElementById('friendship-test-form');
+            const questionDivs = form.querySelectorAll('.question');
+            
+            questionDivs.forEach((questionDiv, index) => {
+                if (currentTest.questions[index].type === 'multiple-choice') {
+                    const selectedOption = questionDiv.querySelector('input[type="radio"]:checked');
+                    answers.push(selectedOption ? selectedOption.nextElementSibling.textContent : '');
+                } else {
+                    const textarea = questionDiv.querySelector('textarea');
+                    answers.push(textarea ? textarea.value : '');
+                }
+            });
+            
+            submitTestResponse(currentTest.id, participantName, answers);
+        });
+        
+        document.getElementById('add-question-btn').addEventListener('click', addQuestionToTest);
+        document.getElementById('save-test-btn').addEventListener('click', saveTest);
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si hay un usuario logueado
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                authScreen.classList.add('hidden');
+                mainScreen.classList.remove('hidden');
+                updateUI();
+                loadUserTests();
+            }
+            
+            // Agregar primera pregunta al crear test
+            document.getElementById('create-test-tab').addEventListener('click', addQuestionToTest);
         });
     </script>
 </body>
